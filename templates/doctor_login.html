@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Doctor Login</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f8fb;
+            min-height: 100vh;
+        }
+
+        /* =========================
+           NAVBAR
+        ========================= */
+
+        nav {
+            background: #0b6fa4;
+
+            padding: 18px 60px;
+        }
+
+        .logo {
+            color: white;
+
+            font-size: 24px;
+
+            font-weight: bold;
+        }
+
+        /* =========================
+           LOGIN CONTAINER
+        ========================= */
+
+        .container {
+            width: 450px;
+
+            max-width: 90%;
+
+            margin: 70px auto;
+
+            background: white;
+
+            padding: 40px;
+
+            border-radius: 12px;
+
+            box-shadow:
+                0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+
+            color: #0b6fa4;
+
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            text-align: center;
+
+            color: #666;
+
+            margin-bottom: 30px;
+        }
+
+        /* =========================
+           FORM
+        ========================= */
+
+        label {
+            display: block;
+
+            margin-bottom: 7px;
+
+            font-weight: bold;
+
+            color: #333;
+        }
+
+        input {
+            width: 100%;
+
+            padding: 13px;
+
+            margin-bottom: 20px;
+
+            border: 1px solid #ccc;
+
+            border-radius: 6px;
+
+            font-size: 15px;
+        }
+
+        input:focus {
+            outline: none;
+
+            border-color: #0b6fa4;
+        }
+
+        /* =========================
+           LOGIN BUTTON
+        ========================= */
+
+        .login-btn {
+            width: 100%;
+
+            padding: 14px;
+
+            background: #0b6fa4;
+
+            color: white;
+
+            border: none;
+
+            border-radius: 6px;
+
+            font-size: 17px;
+
+            cursor: pointer;
+        }
+
+        .login-btn:hover {
+            background: #095d8a;
+        }
+
+        /* =========================
+           LINKS
+        ========================= */
+
+        .back {
+            display: block;
+
+            text-align: center;
+
+            margin-top: 20px;
+
+            color: #0b6fa4;
+
+            text-decoration: none;
+
+            font-weight: bold;
+        }
+
+        .back:hover {
+            text-decoration: underline;
+        }
+
+        .info {
+            margin-top: 25px;
+
+            padding: 12px;
+
+            background: #f4f8fb;
+
+            border-radius: 6px;
+
+            text-align: center;
+
+            color: #666;
+
+            font-size: 13px;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- NAVBAR -->
+
+    <nav>
+
+        <div class="logo">
+            🏥 Hospital Portal
+        </div>
+
+    </nav>
+
+
+    <!-- LOGIN -->
+
+    <div class="container">
+
+        <h1>
+            👨‍⚕️ Doctor Login
+        </h1>
+
+        <p class="subtitle">
+            Login to access your doctor dashboard
+        </p>
+
+
+        <form method="POST">
+
+
+            <label>
+                Email
+            </label>
+
+            <input
+                type="email"
+                name="email"
+                placeholder="Enter doctor email"
+                required
+            >
+
+
+            <label>
+                Password
+            </label>
+
+            <input
+                type="password"
+                name="password"
+                placeholder="Enter password"
+                required
+            >
+
+
+            <button
+                type="submit"
+                class="login-btn"
+            >
+                Login
+            </button>
+
+
+        </form>
+
+
+        <div class="info">
+            🔐 Authorized doctors only
+        </div>
+
+
+        <a
+            href="/"
+            class="back"
+        >
+            ← Back to Home
+        </a>
+
+    </div>
+
+
+</body>
+
+</html>

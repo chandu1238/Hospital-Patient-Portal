@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>My Appointments</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f8fb;
+            color: #333;
+        }
+
+        /* =========================
+           NAVBAR
+        ========================= */
+
+        nav {
+            background: #0b6fa4;
+            padding: 18px 60px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .logout {
+            color: white;
+            text-decoration: none;
+            background: #d9534f;
+            padding: 9px 15px;
+            border-radius: 6px;
+        }
+
+        .logout:hover {
+            background: #c9302c;
+        }
+
+        /* =========================
+           MAIN CONTAINER
+        ========================= */
+
+        .container {
+            width: 1100px;
+            max-width: 94%;
+            margin: 40px auto;
+        }
+
+        .header {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+
+            box-shadow:
+                0 3px 12px rgba(0, 0, 0, 0.08);
+
+            margin-bottom: 25px;
+        }
+
+        .header h1 {
+            color: #0b6fa4;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            color: #777;
+        }
+
+        /* =========================
+           APPOINTMENT CARDS
+        ========================= */
+
+        .appointments {
+            display: grid;
+            gap: 20px;
+        }
+
+        .appointment-card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+
+            box-shadow:
+                0 3px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .appointment-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            margin-bottom: 20px;
+        }
+
+        .doctor {
+            color: #0b6fa4;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .status {
+            background: #fff3cd;
+            color: #856404;
+
+            padding: 7px 14px;
+
+            border-radius: 20px;
+
+            font-size: 13px;
+
+            font-weight: bold;
+        }
+
+        .details {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .detail {
+            background: #f4f8fb;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .detail strong {
+            display: block;
+            color: #666;
+            font-size: 13px;
+            margin-bottom: 6px;
+        }
+
+        .detail span {
+            color: #333;
+            font-size: 15px;
+        }
+
+        .reason {
+            margin-top: 15px;
+            background: #f4f8fb;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .reason strong {
+            color: #666;
+            font-size: 13px;
+        }
+
+        .reason p {
+            margin-top: 6px;
+        }
+
+        /* =========================
+           EMPTY STATE
+        ========================= */
+
+        .empty {
+            background: white;
+            padding: 50px;
+            text-align: center;
+            border-radius: 12px;
+
+            box-shadow:
+                0 3px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .empty h2 {
+            color: #0b6fa4;
+            margin-bottom: 10px;
+        }
+
+        .empty p {
+            color: #777;
+            margin-bottom: 20px;
+        }
+
+        .book-btn {
+            display: inline-block;
+            background: #0b6fa4;
+            color: white;
+            text-decoration: none;
+
+            padding: 12px 20px;
+
+            border-radius: 7px;
+        }
+
+        .book-btn:hover {
+            background: #095d8a;
+        }
+
+        /* =========================
+           BACK BUTTON
+        ========================= */
+
+        .back {
+            display: inline-block;
+
+            margin-top: 25px;
+
+            color: #0b6fa4;
+
+            text-decoration: none;
+
+            font-weight: bold;
+        }
+
+        .back:hover {
+            text-decoration: underline;
+        }
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width: 700px) {
+
+            nav {
+                padding: 15px 20px;
+            }
+
+            .logo {
+                font-size: 19px;
+            }
+
+            .details {
+                grid-template-columns: 1fr;
+            }
+
+            .appointment-top {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =========================
+         NAVBAR
+    ========================= -->
+
+    <nav>
+
+        <div class="logo">
+            🏥 Hospital Portal
+        </div>
+
+        <a
+            href="{{ url_for('logout') }}"
+            class="logout"
+        >
+            🚪 Logout
+        </a>
+
+    </nav>
+
+
+    <!-- =========================
+         MAIN
+    ========================= -->
+
+    <div class="container">
+
+
+        <!-- HEADER -->
+
+        <div class="header">
+
+            <h1>
+                📋 My Appointments
+            </h1>
+
+            <p>
+                Welcome, {{ patient_name }}.
+                Here you can view all your appointments.
+            </p>
+
+        </div>
+
+
+        <!-- =========================
+             APPOINTMENTS
+        ========================= -->
+
+        {% if appointments %}
+
+            <div class="appointments">
+
+                {% for appointment in appointments %}
+
+                    <div class="appointment-card">
+                         
+
+
+                        <div class="appointment-top">
+
+                            <div class="doctor">
+
+                                👨‍⚕️
+                                {{ appointment["doctor_name"] }}
+
+                            </div>
+
+                            <div class="status">
+
+                                {{ appointment["status"] }}
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="details">
+
+
+                            <!-- DATE -->
+
+                            <div class="detail">
+
+                                <strong>
+                                    📅 DATE
+                                </strong>
+
+                                <span>
+                                    {{ appointment["appointment_date"] }}
+                                </span>
+
+                            </div>
+
+
+                            <!-- TIME -->
+
+                            <div class="detail">
+
+                                <strong>
+                                    🕐 TIME
+                                </strong>
+
+                                <span>
+                                    {{ appointment["appointment_time"] }}
+                                </span>
+
+                            </div>
+
+
+                            <!-- APPOINTMENT ID -->
+
+                            <div class="detail">
+
+                                <strong>
+                                    🔢 APPOINTMENT ID
+                                </strong>
+
+                                <span>
+                                    #{{ appointment["id"] }}
+                                </span>
+
+                            </div>
+
+
+                        </div>
+
+
+                        <!-- REASON -->
+
+                        <div class="reason">
+
+                            <strong>
+                                📝 REASON FOR VISIT
+                            </strong>
+
+                            <p>
+                                {{ appointment["reason"] or "Not provided" }}
+                            </p>
+
+                        </div>
+
+                        {% if appointment["status"] != "Cancelled" %}
+
+    <form
+        method="POST"
+        action="{{ url_for('cancel_appointment', appointment_id=appointment['id']) }}"
+        onsubmit="return confirm('Are you sure you want to cancel this appointment?');"
+        style="margin-top: 15px;"
+    >
+
+        <button
+            type="submit"
+            style="
+                background: #d9534f;
+                color: white;
+                border: none;
+                padding: 11px 18px;
+                border-radius: 6px;
+                cursor: pointer;
+                font-size: 14px;
+            "
+        >
+            ❌ Cancel Appointment
+        </button>
+
+    </form>
+
+{% else %}
+
+    <div
+        style="
+            margin-top: 15px;
+            color: #d9534f;
+            font-weight: bold;
+        "
+    >
+        ❌ This appointment has been cancelled.
+    </div>
+
+{% endif %}
+
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+
+        {% else %}
+
+
+            <!-- NO APPOINTMENTS -->
+
+            <div class="empty">
+
+                <h2>
+                    📅 No Appointments
+                </h2>
+
+                <p>
+                    You haven't booked any appointments yet.
+                </p>
+
+                <a
+                    href="{{ url_for('book_appointment') }}"
+                    class="book-btn"
+                >
+                    + Book Appointment
+                </a>
+
+            </div>
+
+
+        {% endif %}
+
+
+        <!-- BACK -->
+
+        <a
+            href="{{ url_for('patient_dashboard') }}"
+            class="back"
+        >
+            ← Back to Dashboard
+        </a>
+
+
+    </div>
+
+
+</body>
+
+</html>

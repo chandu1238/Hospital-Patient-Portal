@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Our Doctors</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f8fb;
+            color: #333;
+            min-height: 100vh;
+        }
+
+        /* =========================
+           NAVBAR
+        ========================= */
+
+        nav {
+            background: #0b6fa4;
+            padding: 18px 60px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .logout {
+            color: white;
+            text-decoration: none;
+            background: #d9534f;
+            padding: 9px 15px;
+            border-radius: 6px;
+        }
+
+        .logout:hover {
+            background: #c9302c;
+        }
+
+        /* =========================
+           MAIN
+        ========================= */
+
+        .container {
+            width: 1100px;
+            max-width: 94%;
+            margin: 40px auto;
+        }
+
+        .header {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+
+            box-shadow:
+                0 3px 12px rgba(0, 0, 0, 0.08);
+
+            margin-bottom: 25px;
+        }
+
+        .header h1 {
+            color: #0b6fa4;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            color: #777;
+        }
+
+        /* =========================
+           DOCTOR GRID
+        ========================= */
+
+        .doctor-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 20px;
+        }
+
+        /* =========================
+           DOCTOR CARD
+        ========================= */
+
+        .doctor-card {
+            background: white;
+
+            padding: 25px;
+
+            border-radius: 12px;
+
+            box-shadow:
+                0 3px 12px rgba(0, 0, 0, 0.08);
+
+            text-align: center;
+
+            transition: 0.3s;
+        }
+
+        .doctor-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .doctor-icon {
+            width: 75px;
+            height: 75px;
+
+            margin: 0 auto 15px;
+
+            background: #e2f1f8;
+
+            border-radius: 50%;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 35px;
+        }
+
+        .doctor-card h2 {
+            color: #0b6fa4;
+
+            font-size: 20px;
+
+            margin-bottom: 8px;
+        }
+
+        .specialization {
+            color: #555;
+
+            font-weight: bold;
+
+            margin-bottom: 15px;
+        }
+
+        .doctor-info {
+            text-align: left;
+
+            background: #f4f8fb;
+
+            padding: 15px;
+
+            border-radius: 8px;
+
+            margin-bottom: 15px;
+        }
+
+        .doctor-info p {
+            margin-bottom: 8px;
+
+            font-size: 14px;
+        }
+
+        .doctor-info p:last-child {
+            margin-bottom: 0;
+        }
+
+        .book-btn {
+            display: block;
+
+            background: #0b6fa4;
+
+            color: white;
+
+            text-decoration: none;
+
+            padding: 12px;
+
+            border-radius: 7px;
+
+            font-weight: bold;
+        }
+
+        .book-btn:hover {
+            background: #095d8a;
+        }
+
+        /* =========================
+           BACK
+        ========================= */
+
+        .back {
+            display: inline-block;
+
+            margin-top: 25px;
+
+            color: #0b6fa4;
+
+            text-decoration: none;
+
+            font-weight: bold;
+        }
+
+        .back:hover {
+            text-decoration: underline;
+        }
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width: 900px) {
+
+            .doctor-grid {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+        }
+
+        @media (max-width: 600px) {
+
+            nav {
+                padding: 15px 20px;
+            }
+
+            .logo {
+                font-size: 19px;
+            }
+
+            .doctor-grid {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =========================
+         NAVBAR
+    ========================= -->
+
+    <nav>
+
+        <div class="logo">
+            🏥 Hospital Portal
+        </div>
+
+        <a
+            href="{{ url_for('logout') }}"
+            class="logout"
+        >
+            🚪 Logout
+        </a>
+
+    </nav>
+
+
+    <!-- =========================
+         MAIN
+    ========================= -->
+
+    <div class="container">
+
+
+        <div class="header">
+
+            <h1>
+                👨‍⚕️ Our Doctors
+            </h1>
+
+            <p>
+                Choose a doctor based on your healthcare needs.
+            </p>
+
+        </div>
+
+
+        <!-- =========================
+             DOCTORS
+        ========================= -->
+
+        <div class="doctor-grid">
+
+            {% for doctor in doctors %}
+
+                <div class="doctor-card">
+
+
+                    <div class="doctor-icon">
+                        👨‍⚕️
+                    </div>
+
+
+                    <h2>
+                        {{ doctor["name"] }}
+                    </h2>
+
+
+                    <p class="specialization">
+                        {{ doctor["specialization"] }}
+                    </p>
+
+
+                    <div class="doctor-info">
+
+                        <p>
+                            📞
+                            {{ doctor["phone"] }}
+                        </p>
+
+                        <p>
+                            📧
+                            {{ doctor["email"] }}
+                        </p>
+
+                        <p>
+                            💼
+                            {{ doctor["experience"] }}
+                            years experience
+                        </p>
+
+                    </div>
+
+
+                    <a
+                        href="{{ url_for('book_appointment') }}"
+                        class="book-btn"
+                    >
+                        📅 Book Appointment
+                    </a>
+
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+
+        <!-- BACK -->
+
+        <a
+            href="{{ url_for('patient_dashboard') }}"
+            class="back"
+        >
+            ← Back to Dashboard
+        </a>
+
+
+    </div>
+
+
+</body>
+
+</html>

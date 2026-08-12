@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Add Lab Report</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f8fb;
+            min-height: 100vh;
+            color: #333;
+        }
+
+        /* =========================
+           NAVBAR
+        ========================= */
+
+        nav {
+            background: #0b6fa4;
+            padding: 18px 60px;
+        }
+
+        .logo {
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        /* =========================
+           CONTAINER
+        ========================= */
+
+        .container {
+            width: 650px;
+            max-width: 92%;
+            margin: 45px auto;
+
+            background: white;
+
+            padding: 35px;
+
+            border-radius: 12px;
+
+            box-shadow:
+                0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #0b6fa4;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #777;
+            margin-bottom: 30px;
+        }
+
+        /* =========================
+           FORM
+        ========================= */
+
+        label {
+            display: block;
+            margin-bottom: 7px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        input,
+        select,
+        textarea {
+
+            width: 100%;
+
+            padding: 12px;
+
+            margin-bottom: 20px;
+
+            border: 1px solid #ccc;
+
+            border-radius: 6px;
+
+            font-size: 15px;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+
+            outline: none;
+
+            border-color: #0b6fa4;
+        }
+
+        textarea {
+
+            height: 100px;
+
+            resize: vertical;
+        }
+
+        /* =========================
+           BUTTON
+        ========================= */
+
+        .save-btn {
+
+            width: 100%;
+
+            padding: 14px;
+
+            background: #0b6fa4;
+
+            color: white;
+
+            border: none;
+
+            border-radius: 6px;
+
+            font-size: 17px;
+
+            cursor: pointer;
+        }
+
+        .save-btn:hover {
+
+            background: #095d8a;
+        }
+
+        /* =========================
+           BACK
+        ========================= */
+
+        .back {
+
+            display: block;
+
+            text-align: center;
+
+            margin-top: 20px;
+
+            color: #0b6fa4;
+
+            text-decoration: none;
+
+            font-weight: bold;
+        }
+
+        .back:hover {
+
+            text-decoration: underline;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- NAVBAR -->
+
+    <nav>
+
+        <div class="logo">
+            🏥 Hospital Portal
+        </div>
+
+    </nav>
+
+
+    <!-- FORM -->
+
+    <div class="container">
+
+
+        <h1>
+            🧪 Add Lab Report
+        </h1>
+
+        <p class="subtitle">
+            Add laboratory test results for a patient
+        </p>
+
+
+        <form method="POST">
+
+
+            <!-- PATIENT -->
+
+            <label>
+                Select Patient
+            </label>
+
+            <select
+                name="patient_id"
+                required
+            >
+
+                <option value="">
+                    Select Patient
+                </option>
+
+                {% for patient in patients %}
+
+                    <option value="{{ patient['id'] }}">
+
+                        {{ patient['name'] }}
+                        -
+                        {{ patient['email'] }}
+
+                    </option>
+
+                {% endfor %}
+
+            </select>
+
+
+            <!-- DOCTOR -->
+
+            <label>
+                Doctor
+            </label>
+
+            <select
+                name="doctor_name"
+            >
+
+                <option value="">
+                    Select Doctor
+                </option>
+
+                {% for doctor in doctors %}
+
+                    <option value="{{ doctor['name'] }}">
+
+                        {{ doctor['name'] }}
+                        -
+                        {{ doctor['specialization'] }}
+
+                    </option>
+
+                {% endfor %}
+
+            </select>
+
+
+            <!-- TEST NAME -->
+
+            <label>
+                Test Name
+            </label>
+
+            <input
+                type="text"
+                name="test_name"
+                placeholder="Example: Complete Blood Count (CBC)"
+                required
+            >
+
+
+            <!-- TEST DATE -->
+
+            <label>
+                Test Date
+            </label>
+
+            <input
+                type="date"
+                name="test_date"
+                required
+            >
+
+
+            <!-- RESULT -->
+
+            <label>
+                Result
+            </label>
+
+            <textarea
+                name="result"
+                placeholder="Enter test result..."
+            ></textarea>
+
+
+            <!-- STATUS -->
+
+            <label>
+                Status
+            </label>
+
+            <select
+                name="status"
+                required
+            >
+
+                <option value="Available">
+                    Available
+                </option>
+
+                <option value="Pending">
+                    Pending
+                </option>
+
+                <option value="Reviewed">
+                    Reviewed
+                </option>
+
+            </select>
+
+
+            <!-- NOTES -->
+
+            <label>
+                Notes
+            </label>
+
+            <textarea
+                name="notes"
+                placeholder="Enter additional notes..."
+            ></textarea>
+
+
+            <!-- SUBMIT -->
+
+            <button
+                type="submit"
+                class="save-btn"
+            >
+                💾 Save Lab Report
+            </button>
+
+
+        </form>
+
+
+        <!-- BACK -->
+
+        <a
+            href="{{ url_for('patient_dashboard') }}"
+            class="back"
+        >
+            ← Back to Dashboard
+        </a>
+
+
+    </div>
+
+
+</body>
+
+</html>

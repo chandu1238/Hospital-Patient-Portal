@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Manage Prescriptions</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f8fb;
+            color: #333;
+        }
+
+        /* =========================
+           SIDEBAR
+        ========================= */
+
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+
+            width: 240px;
+            height: 100vh;
+
+            background: #0b6fa4;
+
+            padding: 25px 15px;
+        }
+
+        .logo {
+            color: white;
+
+            font-size: 21px;
+
+            font-weight: bold;
+
+            text-align: center;
+
+            margin-bottom: 35px;
+        }
+
+        .sidebar a {
+            display: block;
+
+            color: white;
+
+            text-decoration: none;
+
+            padding: 13px 15px;
+
+            margin-bottom: 8px;
+
+            border-radius: 7px;
+
+            font-size: 15px;
+        }
+
+        .sidebar a:hover,
+        .sidebar .active {
+            background: #095d8a;
+        }
+
+        .logout {
+            background: #d9534f;
+        }
+
+        .logout:hover {
+            background: #c9302c !important;
+        }
+
+        /* =========================
+           MAIN
+        ========================= */
+
+        .main {
+            margin-left: 240px;
+
+            padding: 30px;
+        }
+
+        /* =========================
+           TOPBAR
+        ========================= */
+
+        .topbar {
+            background: white;
+
+            padding: 20px 25px;
+
+            border-radius: 12px;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 25px;
+
+            box-shadow:
+                0 3px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .topbar h1 {
+            color: #0b6fa4;
+        }
+
+        .admin-name {
+            color: #666;
+        }
+
+        /* =========================
+           TABLE CONTAINER
+        ========================= */
+
+        .table-container {
+            background: white;
+
+            padding: 25px;
+
+            border-radius: 12px;
+
+            box-shadow:
+                0 3px 12px rgba(0, 0, 0, 0.08);
+
+            overflow-x: auto;
+        }
+
+        .table-header {
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 20px;
+        }
+
+        .table-header h2 {
+            color: #0b6fa4;
+        }
+
+        .count {
+            color: #777;
+        }
+
+        /* =========================
+           TABLE
+        ========================= */
+
+        table {
+            width: 100%;
+
+            border-collapse: collapse;
+
+            min-width: 1100px;
+        }
+
+        th {
+            background: #0b6fa4;
+
+            color: white;
+
+            padding: 14px;
+
+            text-align: left;
+
+            font-size: 14px;
+        }
+
+        td {
+            padding: 14px;
+
+            border-bottom: 1px solid #eee;
+
+            font-size: 14px;
+
+            vertical-align: top;
+        }
+
+        tr:hover {
+            background: #f8fbfd;
+        }
+
+        .prescription-id {
+            color: #0b6fa4;
+
+            font-weight: bold;
+        }
+
+        .patient-name {
+            font-weight: bold;
+        }
+
+        .patient-email {
+            color: #777;
+
+            font-size: 12px;
+
+            margin-top: 4px;
+        }
+
+        .doctor {
+            font-weight: bold;
+
+            color: #444;
+        }
+
+        .medicine {
+            font-weight: bold;
+
+            color: #0b6fa4;
+        }
+
+        .dosage {
+            font-weight: bold;
+        }
+
+        .instructions {
+            max-width: 250px;
+
+            line-height: 1.5;
+
+            color: #555;
+        }
+
+        /* =========================
+           EMPTY
+        ========================= */
+
+        .empty {
+            text-align: center;
+
+            padding: 50px;
+
+            color: #777;
+        }
+
+        /* =========================
+           BACK
+        ========================= */
+
+        .back {
+            display: inline-block;
+
+            margin-top: 25px;
+
+            color: #0b6fa4;
+
+            text-decoration: none;
+
+            font-weight: bold;
+        }
+
+        .back:hover {
+            text-decoration: underline;
+        }
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width: 800px) {
+
+            .sidebar {
+                position: relative;
+
+                width: 100%;
+
+                height: auto;
+            }
+
+            .main {
+                margin-left: 0;
+            }
+
+            .topbar {
+                flex-direction: column;
+
+                align-items: flex-start;
+
+                gap: 10px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =========================
+         SIDEBAR
+    ========================= -->
+
+    <div class="sidebar">
+
+        <div class="logo">
+            🏥 Hospital Admin
+        </div>
+
+
+        <a href="{{ url_for('admin_dashboard') }}">
+            🏠 Dashboard
+        </a>
+
+
+        <a href="{{ url_for('admin_patients') }}">
+            👥 Patients
+        </a>
+
+
+        <a href="{{ url_for('admin_doctors') }}">
+            👨‍⚕️ Doctors
+        </a>
+
+
+        <a href="{{ url_for('admin_appointments') }}">
+            📅 Appointments
+        </a>
+
+
+        <a
+            href="{{ url_for('admin_prescriptions') }}"
+            class="active"
+        >
+            💊 Prescriptions
+        </a>
+
+
+      <a href="{{ url_for('admin_lab_reports') }}">
+            🧪 Lab Reports
+        </a>
+
+
+        <a
+            href="{{ url_for('logout') }}"
+            class="logout"
+        >
+            🚪 Logout
+        </a>
+
+    </div>
+
+
+    <!-- =========================
+         MAIN
+    ========================= -->
+
+    <div class="main">
+
+
+        <!-- TOPBAR -->
+
+        <div class="topbar">
+
+            <h1>
+                💊 Manage Prescriptions
+            </h1>
+
+            <div class="admin-name">
+
+                Welcome,
+
+                <strong>
+                    {{ admin_name }}
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================
+             PRESCRIPTIONS
+        ========================= -->
+
+        <div class="table-container">
+
+
+            <div class="table-header">
+
+                <h2>
+                    All Prescriptions
+                </h2>
+
+                <div class="count">
+
+                    Total:
+
+                    <strong>
+                        {{ prescriptions|length }}
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            {% if prescriptions %}
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                ID
+                            </th>
+
+                            <th>
+                                Patient
+                            </th>
+
+                            <th>
+                                Doctor
+                            </th>
+
+                            <th>
+                                Medicine
+                            </th>
+
+                            <th>
+                                Dosage
+                            </th>
+
+                            <th>
+                                Frequency
+                            </th>
+
+                            <th>
+                                Duration
+                            </th>
+
+                            <th>
+                                Instructions
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                        {% for prescription in prescriptions %}
+
+                            <tr>
+
+
+                                <!-- ID -->
+
+                                <td class="prescription-id">
+                                    #{{ prescription["id"] }}
+                                </td>
+
+
+                                <!-- PATIENT -->
+
+                                <td>
+
+                                    <div class="patient-name">
+
+                                        {{ prescription["patient_name"] or "Unknown" }}
+
+                                    </div>
+
+                                    <div class="patient-email">
+
+                                        {{ prescription["patient_email"] or "" }}
+
+                                    </div>
+
+                                </td>
+
+
+                                <!-- DOCTOR -->
+
+                                <td class="doctor">
+
+                                    👨‍⚕️
+                                    {{ prescription["doctor_name"] or "Not specified" }}
+
+                                </td>
+
+
+                                <!-- MEDICINE -->
+
+                                <td class="medicine">
+
+                                    💊
+                                    {{ prescription["medicine_name"] }}
+
+                                </td>
+
+
+                                <!-- DOSAGE -->
+
+                                <td class="dosage">
+
+                                    {{ prescription["dosage"] }}
+
+                                </td>
+
+
+                                <!-- FREQUENCY -->
+
+                                <td>
+
+                                    {{ prescription["frequency"] }}
+
+                                </td>
+
+
+                                <!-- DURATION -->
+
+                                <td>
+
+                                    {{ prescription["duration"] }}
+
+                                </td>
+
+
+                                <!-- INSTRUCTIONS -->
+
+                                <td class="instructions">
+
+                                    {{ prescription["instructions"] or "No instructions" }}
+
+                                </td>
+
+
+                            </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+
+            {% else %}
+
+
+                <div class="empty">
+
+                    <h2>
+                        💊 No Prescriptions
+                    </h2>
+
+                    <p>
+                        No prescriptions have been added yet.
+                    </p>
+
+                </div>
+
+
+            {% endif %}
+
+
+        </div>
+
+
+        <!-- BACK -->
+
+        <a
+            href="{{ url_for('admin_dashboard') }}"
+            class="back"
+        >
+            ← Back to Admin Dashboard
+        </a>
+
+
+    </div>
+
+
+</body>
+
+</html>

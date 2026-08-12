@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Manage Lab Reports</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f8fb;
+            color: #333;
+        }
+
+        /* =========================
+           SIDEBAR
+        ========================= */
+
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+
+            width: 240px;
+            height: 100vh;
+
+            background: #0b6fa4;
+
+            padding: 25px 15px;
+        }
+
+        .logo {
+            color: white;
+
+            font-size: 21px;
+
+            font-weight: bold;
+
+            text-align: center;
+
+            margin-bottom: 35px;
+        }
+
+        .sidebar a {
+            display: block;
+
+            color: white;
+
+            text-decoration: none;
+
+            padding: 13px 15px;
+
+            margin-bottom: 8px;
+
+            border-radius: 7px;
+
+            font-size: 15px;
+        }
+
+        .sidebar a:hover,
+        .sidebar .active {
+            background: #095d8a;
+        }
+
+        .logout {
+            background: #d9534f;
+        }
+
+        .logout:hover {
+            background: #c9302c !important;
+        }
+
+        /* =========================
+           MAIN
+        ========================= */
+
+        .main {
+            margin-left: 240px;
+
+            padding: 30px;
+        }
+
+        /* =========================
+           TOPBAR
+        ========================= */
+
+        .topbar {
+            background: white;
+
+            padding: 20px 25px;
+
+            border-radius: 12px;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 25px;
+
+            box-shadow:
+                0 3px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .topbar h1 {
+            color: #0b6fa4;
+        }
+
+        .admin-name {
+            color: #666;
+        }
+
+        /* =========================
+           TABLE
+        ========================= */
+
+        .table-container {
+            background: white;
+
+            padding: 25px;
+
+            border-radius: 12px;
+
+            box-shadow:
+                0 3px 12px rgba(0, 0, 0, 0.08);
+
+            overflow-x: auto;
+        }
+
+        .table-header {
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 20px;
+        }
+
+        .table-header h2 {
+            color: #0b6fa4;
+        }
+
+        .count {
+            color: #777;
+        }
+
+        table {
+            width: 100%;
+
+            border-collapse: collapse;
+
+            min-width: 1000px;
+        }
+
+        th {
+            background: #0b6fa4;
+
+            color: white;
+
+            padding: 14px;
+
+            text-align: left;
+
+            font-size: 14px;
+        }
+
+        td {
+            padding: 14px;
+
+            border-bottom: 1px solid #eee;
+
+            font-size: 14px;
+
+            vertical-align: top;
+        }
+
+        tr:hover {
+            background: #f8fbfd;
+        }
+
+        .report-id {
+            color: #0b6fa4;
+
+            font-weight: bold;
+        }
+
+        .patient-name {
+            font-weight: bold;
+        }
+
+        .patient-email {
+            color: #777;
+
+            font-size: 12px;
+
+            margin-top: 4px;
+        }
+
+        .doctor-name {
+            font-weight: bold;
+        }
+
+        .test-name {
+            color: #0b6fa4;
+
+            font-weight: bold;
+        }
+
+        .result {
+            max-width: 250px;
+
+            line-height: 1.5;
+        }
+
+        .notes {
+            max-width: 220px;
+
+            line-height: 1.5;
+
+            color: #555;
+        }
+
+        .status {
+            display: inline-block;
+
+            padding: 6px 10px;
+
+            border-radius: 15px;
+
+            font-size: 12px;
+
+            font-weight: bold;
+        }
+
+        .status-normal {
+            background: #dff5e1;
+
+            color: #287a35;
+        }
+
+        .status-abnormal {
+            background: #f8d7da;
+
+            color: #842029;
+        }
+
+        .status-pending {
+            background: #fff3cd;
+
+            color: #856404;
+        }
+
+        /* =========================
+           EMPTY
+        ========================= */
+
+        .empty {
+            text-align: center;
+
+            padding: 50px;
+
+            color: #777;
+        }
+
+        /* =========================
+           BACK
+        ========================= */
+
+        .back {
+            display: inline-block;
+
+            margin-top: 25px;
+
+            color: #0b6fa4;
+
+            text-decoration: none;
+
+            font-weight: bold;
+        }
+
+        .back:hover {
+            text-decoration: underline;
+        }
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width: 800px) {
+
+            .sidebar {
+                position: relative;
+
+                width: 100%;
+
+                height: auto;
+            }
+
+            .main {
+                margin-left: 0;
+            }
+
+            .topbar {
+                flex-direction: column;
+
+                align-items: flex-start;
+
+                gap: 10px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =========================
+         SIDEBAR
+    ========================= -->
+
+    <div class="sidebar">
+
+        <div class="logo">
+            🏥 Hospital Admin
+        </div>
+
+
+        <a href="{{ url_for('admin_dashboard') }}">
+            🏠 Dashboard
+        </a>
+
+
+        <a href="{{ url_for('admin_patients') }}">
+            👥 Patients
+        </a>
+
+
+        <a href="{{ url_for('admin_doctors') }}">
+            👨‍⚕️ Doctors
+        </a>
+
+
+        <a href="{{ url_for('admin_appointments') }}">
+            📅 Appointments
+        </a>
+
+
+        <a href="{{ url_for('admin_prescriptions') }}">
+            💊 Prescriptions
+        </a>
+
+
+        <a
+            href="{{ url_for('admin_lab_reports') }}"
+            class="active"
+        >
+            🧪 Lab Reports
+        </a>
+
+
+        <a
+            href="{{ url_for('logout') }}"
+            class="logout"
+        >
+            🚪 Logout
+        </a>
+
+    </div>
+
+
+    <!-- =========================
+         MAIN
+    ========================= -->
+
+    <div class="main">
+
+
+        <!-- TOPBAR -->
+
+        <div class="topbar">
+
+            <h1>
+                🧪 Manage Lab Reports
+            </h1>
+
+            <div class="admin-name">
+
+                Welcome,
+
+                <strong>
+                    {{ admin_name }}
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================
+             LAB REPORTS
+        ========================= -->
+
+        <div class="table-container">
+
+
+            <div class="table-header">
+
+                <h2>
+                    All Lab Reports
+                </h2>
+
+                <div class="count">
+
+                    Total:
+
+                    <strong>
+                        {{ lab_reports|length }}
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            {% if lab_reports %}
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                ID
+                            </th>
+
+                            <th>
+                                Patient
+                            </th>
+
+                            <th>
+                                Doctor
+                            </th>
+
+                            <th>
+                                Test
+                            </th>
+
+                            <th>
+                                Date
+                            </th>
+
+                            <th>
+                                Result
+                            </th>
+
+                            <th>
+                                Status
+                            </th>
+
+                            <th>
+                                Notes
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                        {% for report in lab_reports %}
+
+                            <tr>
+
+
+                                <!-- ID -->
+
+                                <td class="report-id">
+                                    #{{ report["id"] }}
+                                </td>
+
+
+                                <!-- PATIENT -->
+
+                                <td>
+
+                                    <div class="patient-name">
+
+                                        {{ report["patient_name"] or "Unknown" }}
+
+                                    </div>
+
+                                    <div class="patient-email">
+
+                                        {{ report["patient_email"] or "" }}
+
+                                    </div>
+
+                                </td>
+
+
+                                <!-- DOCTOR -->
+
+                                <td class="doctor-name">
+
+                                    👨‍⚕️
+                                    {{ report["doctor_name"] or "Not specified" }}
+
+                                </td>
+
+
+                                <!-- TEST -->
+
+                                <td class="test-name">
+
+                                    🧪
+                                    {{ report["test_name"] or report["test"] or "Not specified" }}
+
+                                </td>
+
+
+                                <!-- DATE -->
+
+                                <td>
+
+                                    📅
+                                    {{ report["report_date"] or report["date"] or "Not specified" }}
+
+                                </td>
+
+
+                                <!-- RESULT -->
+
+                                <td class="result">
+
+                                    {{ report["result"] or "No result" }}
+
+                                </td>
+
+
+                                <!-- STATUS -->
+
+                                <td>
+
+                                    {% set status = report["status"] or "Pending" %}
+
+
+                                    {% if status == "Normal" %}
+
+                                        <span class="status status-normal">
+                                            Normal
+                                        </span>
+
+                                    {% elif status == "Abnormal" %}
+
+                                        <span class="status status-abnormal">
+                                            Abnormal
+                                        </span>
+
+                                    {% else %}
+
+                                        <span class="status status-pending">
+                                            {{ status }}
+                                        </span>
+
+                                    {% endif %}
+
+                                </td>
+
+
+                                <!-- NOTES -->
+
+                                <td class="notes">
+
+                                    {{ report["notes"] or "No notes" }}
+
+                                </td>
+
+
+                            </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+
+            {% else %}
+
+
+                <div class="empty">
+
+                    <h2>
+                        🧪 No Lab Reports
+                    </h2>
+
+                    <p>
+                        No lab reports have been added yet.
+                    </p>
+
+                </div>
+
+
+            {% endif %}
+
+
+        </div>
+
+
+        <!-- BACK -->
+
+        <a
+            href="{{ url_for('admin_dashboard') }}"
+            class="back"
+        >
+            ← Back to Admin Dashboard
+        </a>
+
+
+    </div>
+
+
+</body>
+
+</html>

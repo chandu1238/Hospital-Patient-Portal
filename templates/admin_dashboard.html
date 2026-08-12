@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Admin Dashboard</title>
+
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+
+        body {
+            background: #f4f8fb;
+            color: #333;
+        }
+
+
+        /* =========================
+           SIDEBAR
+        ========================= */
+
+        .sidebar {
+            position: fixed;
+
+            left: 0;
+            top: 0;
+
+            width: 240px;
+            height: 100vh;
+
+            background: #0b6fa4;
+
+            padding: 25px 15px;
+        }
+
+
+        .logo {
+            color: white;
+
+            font-size: 21px;
+
+            font-weight: bold;
+
+            text-align: center;
+
+            margin-bottom: 35px;
+        }
+
+
+        .sidebar a {
+            display: block;
+
+            color: white;
+
+            text-decoration: none;
+
+            padding: 13px 15px;
+
+            margin-bottom: 8px;
+
+            border-radius: 7px;
+
+            font-size: 15px;
+        }
+
+
+        .sidebar a:hover {
+            background: #095d8a;
+        }
+
+
+        .logout {
+            background: #d9534f;
+        }
+
+
+        .logout:hover {
+            background: #c9302c !important;
+        }
+
+
+        /* =========================
+           MAIN
+        ========================= */
+
+        .main {
+            margin-left: 240px;
+
+            padding: 30px;
+        }
+
+
+        /* =========================
+           TOPBAR
+        ========================= */
+
+        .topbar {
+            background: white;
+
+            padding: 20px 25px;
+
+            border-radius: 12px;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 25px;
+
+            box-shadow:
+                0 3px 12px rgba(0, 0, 0, 0.08);
+        }
+
+
+        .topbar h1 {
+            color: #0b6fa4;
+        }
+
+
+        .admin-name {
+            color: #666;
+        }
+
+
+        /* =========================
+           CARDS
+        ========================= */
+
+        .cards {
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 20px;
+
+            margin-bottom: 30px;
+        }
+
+
+        .card {
+            background: white;
+
+            padding: 25px;
+
+            border-radius: 12px;
+
+            box-shadow:
+                0 3px 12px rgba(0, 0, 0, 0.08);
+
+            text-align: center;
+        }
+
+
+        .card-icon {
+            font-size: 35px;
+
+            margin-bottom: 10px;
+        }
+
+
+        .card h3 {
+            color: #666;
+
+            font-size: 15px;
+
+            margin-bottom: 10px;
+        }
+
+
+        .card p {
+            color: #0b6fa4;
+
+            font-size: 30px;
+
+            font-weight: bold;
+        }
+
+
+        /* =========================
+           APPOINTMENT STATUS CARDS
+        ========================= */
+
+        .status-card {
+            background: white;
+
+            padding: 22px;
+
+            border-radius: 12px;
+
+            box-shadow:
+                0 3px 12px rgba(0, 0, 0, 0.08);
+
+            text-align: center;
+        }
+
+
+        .status-card .card-icon {
+            font-size: 32px;
+
+            margin-bottom: 8px;
+        }
+
+
+        .status-card h3 {
+            color: #666;
+
+            font-size: 14px;
+
+            margin-bottom: 8px;
+        }
+
+
+        .status-card p {
+            font-size: 28px;
+
+            font-weight: bold;
+        }
+
+
+        .pending-card p {
+            color: #c69200;
+        }
+
+
+        .confirmed-card p {
+            color: #287a35;
+        }
+
+
+        .cancelled-card p {
+            color: #d9534f;
+        }
+
+
+        .completed-card p {
+            color: #0c7891;
+        }
+
+
+        /* =========================
+           QUICK ACTIONS
+        ========================= */
+
+        .section {
+            background: white;
+
+            padding: 25px;
+
+            border-radius: 12px;
+
+            box-shadow:
+                0 3px 12px rgba(0, 0, 0, 0.08);
+        }
+
+
+        .section h2 {
+            color: #0b6fa4;
+
+            margin-bottom: 20px;
+        }
+
+
+        .actions {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 15px;
+        }
+
+
+        .action {
+            display: block;
+
+            padding: 18px;
+
+            background: #f4f8fb;
+
+            border-radius: 8px;
+
+            text-decoration: none;
+
+            color: #333;
+
+            font-weight: bold;
+
+            text-align: center;
+
+            transition: 0.2s;
+        }
+
+
+        .action:hover {
+            background: #e2f1f8;
+
+            transform: translateY(-2px);
+        }
+
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width: 1100px) {
+
+            .cards {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+        }
+
+
+        @media (max-width: 1000px) {
+
+            .actions {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+        }
+
+
+        @media (max-width: 700px) {
+
+            .sidebar {
+                position: relative;
+
+                width: 100%;
+
+                height: auto;
+            }
+
+
+            .main {
+                margin-left: 0;
+            }
+
+
+            .cards {
+                grid-template-columns: 1fr;
+            }
+
+
+            .actions {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =========================
+         SIDEBAR
+    ========================= -->
+
+    <div class="sidebar">
+
+
+        <div class="logo">
+            🏥 Hospital Admin
+        </div>
+
+
+        <a href="{{ url_for('admin_dashboard') }}">
+            🏠 Dashboard
+        </a>
+
+
+        <a href="{{ url_for('admin_patients') }}">
+            👥 Patients
+        </a>
+
+
+        <a href="{{ url_for('admin_doctors') }}">
+            👨‍⚕️ Doctors
+        </a>
+
+
+        <a href="{{ url_for('admin_appointments') }}">
+            📅 Appointments
+        </a>
+
+
+        <a href="{{ url_for('admin_prescriptions') }}">
+            💊 Prescriptions
+        </a>
+
+
+       <a href="{{ url_for('admin_lab_reports') }}">
+            🧪 Lab Reports
+        </a>
+
+
+        <a
+            href="{{ url_for('logout') }}"
+            class="logout"
+        >
+            🚪 Logout
+        </a>
+
+
+    </div>
+
+
+    <!-- =========================
+         MAIN
+    ========================= -->
+
+    <div class="main">
+
+
+        <!-- TOPBAR -->
+
+        <div class="topbar">
+
+
+            <h1>
+                Admin Dashboard
+            </h1>
+
+
+            <div class="admin-name">
+
+                Welcome,
+
+                <strong>
+                    {{ admin_name }}
+                </strong>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- =========================
+             MAIN STATISTICS
+        ========================= -->
+
+        <div class="cards">
+
+
+            <!-- TOTAL PATIENTS -->
+
+            <div class="card">
+
+                <div class="card-icon">
+                    👥
+                </div>
+
+                <h3>
+                    Total Patients
+                </h3>
+
+                <p>
+                    {{ total_patients }}
+                </p>
+
+            </div>
+
+
+            <!-- TOTAL DOCTORS -->
+
+            <div class="card">
+
+                <div class="card-icon">
+                    👨‍⚕️
+                </div>
+
+                <h3>
+                    Total Doctors
+                </h3>
+
+                <p>
+                    {{ total_doctors }}
+                </p>
+
+            </div>
+
+
+            <!-- TOTAL APPOINTMENTS -->
+
+            <div class="card">
+
+                <div class="card-icon">
+                    📅
+                </div>
+
+                <h3>
+                    Total Appointments
+                </h3>
+
+                <p>
+                    {{ total_appointments }}
+                </p>
+
+            </div>
+
+
+            <!-- LAB REPORTS -->
+
+            <div class="card">
+
+                <div class="card-icon">
+                    🧪
+                </div>
+
+                <h3>
+                    Lab Reports
+                </h3>
+
+                <p>
+                    {{ total_lab_reports }}
+                </p>
+
+            </div>
+
+
+            <!-- PENDING -->
+
+            <div class="status-card pending-card">
+
+                <div class="card-icon">
+                    🟡
+                </div>
+
+                <h3>
+                    Pending Appointments
+                </h3>
+
+                <p>
+                    {{ pending_appointments }}
+                </p>
+
+            </div>
+
+
+            <!-- CONFIRMED -->
+
+            <div class="status-card confirmed-card">
+
+                <div class="card-icon">
+                    🟢
+                </div>
+
+                <h3>
+                    Confirmed Appointments
+                </h3>
+
+                <p>
+                    {{ confirmed_appointments }}
+                </p>
+
+            </div>
+
+
+            <!-- CANCELLED -->
+
+            <div class="status-card cancelled-card">
+
+                <div class="card-icon">
+                    🔴
+                </div>
+
+                <h3>
+                    Cancelled Appointments
+                </h3>
+
+                <p>
+                    {{ cancelled_appointments }}
+                </p>
+
+            </div>
+
+
+            <!-- COMPLETED -->
+
+            <div class="status-card completed-card">
+
+                <div class="card-icon">
+                    ✔️
+                </div>
+
+                <h3>
+                    Completed Appointments
+                </h3>
+
+                <p>
+                    {{ completed_appointments }}
+                </p>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- =========================
+             QUICK ACTIONS
+        ========================= -->
+
+        <div class="section">
+
+
+            <h2>
+                ⚡ Quick Actions
+            </h2>
+
+
+            <div class="actions">
+
+
+                <!-- ADD PRESCRIPTION -->
+
+                <a
+                href="{{ url_for('add_prescription') }}"
+                    class="action"
+                >
+                    💊 Add Prescription
+                </a>
+
+
+                <!-- ADD LAB REPORT -->
+
+                <a
+                    href="{{ url_for('add_lab_report') }}"
+                    class="action"
+                >
+                    🧪 Add Lab Report
+                </a>
+
+
+                <!-- MANAGE DOCTORS -->
+
+                <a
+                    href="{{ url_for('admin_doctors') }}"
+                    class="action"
+                >
+                    👨‍⚕️ Manage Doctors
+                </a>
+
+
+                <!-- MANAGE PATIENTS -->
+
+                <a
+                    href="{{ url_for('admin_patients') }}"
+                    class="action"
+                >
+                    👥 Manage Patients
+                </a>
+
+
+                <!-- MANAGE APPOINTMENTS -->
+
+                <a
+                    href="{{ url_for('admin_appointments') }}"
+                    class="action"
+                >
+                    📅 Manage Appointments
+                </a>
+
+
+                <!-- REPORTS -->
+
+                <a
+                    href="#"
+                    class="action"
+                >
+                    📊 Reports
+                </a>
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+</body>
+
+</html>

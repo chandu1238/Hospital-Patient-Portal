@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Hospital & Patient Portal</title>
+
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+
+        body {
+            background: #f4f8fb;
+            color: #222;
+        }
+
+
+        /* =========================
+           NAVBAR
+        ========================= */
+
+        nav {
+            background: #0b6fa4;
+
+            padding: 18px 60px;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+        }
+
+
+        .logo {
+            color: white;
+
+            font-size: 24px;
+
+            font-weight: bold;
+        }
+
+
+        nav a {
+            color: white;
+
+            text-decoration: none;
+
+            margin-left: 25px;
+
+            font-size: 16px;
+        }
+
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+
+        /* =========================
+           HERO
+        ========================= */
+
+        .hero {
+            min-height: 500px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            padding: 60px 10%;
+
+            background: white;
+        }
+
+
+        .hero-text {
+            max-width: 600px;
+        }
+
+
+        .hero-text h1 {
+            font-size: 46px;
+
+            color: #0b6fa4;
+
+            margin-bottom: 20px;
+        }
+
+
+        .hero-text p {
+            font-size: 18px;
+
+            line-height: 1.7;
+
+            color: #555;
+
+            margin-bottom: 30px;
+        }
+
+
+        /* =========================
+           BUTTONS
+        ========================= */
+
+        .btn {
+            display: inline-block;
+
+            padding: 14px 28px;
+
+            background: #0b6fa4;
+
+            color: white;
+
+            text-decoration: none;
+
+            border-radius: 6px;
+
+            margin-right: 10px;
+
+            margin-bottom: 10px;
+        }
+
+
+        .btn:hover {
+            background: #095d8a;
+        }
+
+
+        .btn.secondary {
+            background: #e8f3f8;
+
+            color: #0b6fa4;
+        }
+
+
+        .btn.secondary:hover {
+            background: #d5eaf3;
+        }
+
+
+        /* =========================
+           PORTAL BUTTONS
+        ========================= */
+
+        .portal-buttons {
+            margin-top: 20px;
+
+            display: flex;
+
+            gap: 12px;
+
+            flex-wrap: wrap;
+        }
+
+
+        .portal-btn {
+            display: inline-block;
+
+            padding: 12px 22px;
+
+            border-radius: 6px;
+
+            text-decoration: none;
+
+            font-weight: bold;
+
+            font-size: 14px;
+        }
+
+
+        .patient-btn {
+            background: #0b6fa4;
+
+            color: white;
+        }
+
+
+        .patient-btn:hover {
+            background: #095d8a;
+        }
+
+
+        .admin-btn {
+            background: #555;
+
+            color: white;
+        }
+
+
+        .admin-btn:hover {
+            background: #333;
+        }
+
+
+        /* =========================
+           DOCTOR BUTTON
+        ========================= */
+
+        .doctor-btn {
+            background: #28a745;
+
+            color: white;
+        }
+
+
+        .doctor-btn:hover {
+            background: #218838;
+        }
+
+
+        /* =========================
+           HERO ICON
+        ========================= */
+
+        .hero-icon {
+            font-size: 150px;
+        }
+
+
+        /* =========================
+           SERVICES
+        ========================= */
+
+        .services {
+            padding: 60px 10%;
+
+            text-align: center;
+        }
+
+
+        .services h2 {
+            font-size: 32px;
+
+            color: #0b6fa4;
+
+            margin-bottom: 40px;
+        }
+
+
+        .cards {
+            display: flex;
+
+            justify-content: center;
+
+            gap: 25px;
+
+            flex-wrap: wrap;
+        }
+
+
+        .card {
+            background: white;
+
+            width: 250px;
+
+            padding: 30px 20px;
+
+            border-radius: 10px;
+
+            box-shadow:
+                0 4px 15px rgba(0,0,0,0.08);
+        }
+
+
+        .card .icon {
+            font-size: 45px;
+
+            margin-bottom: 15px;
+        }
+
+
+        .card h3 {
+            color: #0b6fa4;
+
+            margin-bottom: 10px;
+        }
+
+
+        .card p {
+            color: #666;
+
+            line-height: 1.5;
+        }
+
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        footer {
+            background: #0b6fa4;
+
+            color: white;
+
+            text-align: center;
+
+            padding: 20px;
+
+            margin-top: 20px;
+        }
+
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width: 700px) {
+
+            nav {
+                padding: 18px 25px;
+
+                flex-direction: column;
+
+                gap: 15px;
+            }
+
+
+            nav a {
+                margin-left: 10px;
+
+                margin-right: 10px;
+            }
+
+
+            .hero {
+                flex-direction: column;
+
+                text-align: center;
+
+                gap: 40px;
+            }
+
+
+            .hero-text h1 {
+                font-size: 35px;
+            }
+
+
+            .hero-icon {
+                font-size: 100px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =========================
+         NAVBAR
+    ========================= -->
+
+    <nav>
+
+        <div class="logo">
+            🏥 Hospital Portal
+        </div>
+
+
+        <div>
+
+            <a href="/">
+                Home
+            </a>
+
+
+            <a href="/login">
+                Patient Login
+            </a>
+
+
+            <a href="/doctor-login">
+                Doctor Login
+            </a>
+
+
+            <a href="{{ url_for('admin_login') }}">
+                Admin Login
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    <!-- =========================
+         HERO
+    ========================= -->
+
+    <section class="hero">
+
+
+        <div class="hero-text">
+
+
+            <h1>
+                Welcome to Hospital & Patient Portal
+            </h1>
+
+
+            <p>
+                A simple and secure platform to manage patients,
+                doctors and appointments in one place.
+            </p>
+
+
+            <!-- PATIENT LOGIN -->
+
+            <a
+                href="/login"
+                class="btn"
+            >
+                👤 Patient Login
+            </a>
+
+
+            <!-- REGISTER -->
+
+            <a
+                href="/register"
+                class="btn secondary"
+            >
+                📝 Register
+            </a>
+
+
+            <!-- =========================
+                 PORTAL LOGIN BUTTONS
+            ========================= -->
+
+            <div class="portal-buttons">
+
+
+                <!-- PATIENT PORTAL -->
+
+                <a
+                    href="/login"
+                    class="portal-btn patient-btn"
+                >
+                    👤 Patient Portal
+                </a>
+
+
+                <!-- ADMIN PORTAL -->
+
+                <a
+                    href="{{ url_for('admin_login') }}"
+                    class="portal-btn admin-btn"
+                >
+                    🔐 Admin Portal
+                </a>
+
+
+                <!-- DOCTOR PORTAL -->
+
+                <a
+                    href="/doctor-login"
+                    class="portal-btn doctor-btn"
+                >
+                    👨‍⚕️ Doctor Portal
+                </a>
+
+
+            </div>
+
+
+        </div>
+
+
+        <div class="hero-icon">
+            🏥
+        </div>
+
+
+    </section>
+
+
+    <!-- =========================
+         SERVICES
+    ========================= -->
+
+    <section class="services">
+
+
+        <h2>
+            Our Services
+        </h2>
+
+
+        <div class="cards">
+
+
+            <!-- DOCTORS -->
+
+            <div class="card">
+
+                <div class="icon">
+                    👨‍⚕️
+                </div>
+
+                <h3>
+                    Doctors
+                </h3>
+
+                <p>
+                    View available doctors and their specializations.
+                </p>
+
+            </div>
+
+
+            <!-- APPOINTMENTS -->
+
+            <div class="card">
+
+                <div class="icon">
+                    📅
+                </div>
+
+                <h3>
+                    Appointments
+                </h3>
+
+                <p>
+                    Book and manage your hospital appointments.
+                </p>
+
+            </div>
+
+
+            <!-- PATIENT PORTAL -->
+
+            <div class="card">
+
+                <div class="icon">
+                    👤
+                </div>
+
+                <h3>
+                    Patient Portal
+                </h3>
+
+                <p>
+                    Manage your personal information and appointments.
+                </p>
+
+            </div>
+
+
+            <!-- SECURE -->
+
+            <div class="card">
+
+                <div class="icon">
+                    🔒
+                </div>
+
+                <h3>
+                    Secure
+                </h3>
+
+                <p>
+                    Your patient information is stored securely.
+                </p>
+
+            </div>
+
+
+        </div>
+
+
+    </section>
+
+
+    <!-- =========================
+         FOOTER
+    ========================= -->
+
+    <footer>
+
+        <p>
+            © 2026 Hospital & Patient Portal |
+            Python Flask Project
+        </p>
+
+    </footer>
+
+
+</body>
+
+</html>

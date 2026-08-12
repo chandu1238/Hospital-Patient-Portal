@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Manage Doctors</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f8fb;
+            color: #333;
+        }
+
+        /* =========================
+           SIDEBAR
+        ========================= */
+
+        .sidebar {
+            position: fixed;
+
+            left: 0;
+            top: 0;
+
+            width: 240px;
+            height: 100vh;
+
+            background: #0b6fa4;
+
+            padding: 25px 15px;
+        }
+
+        .logo {
+            color: white;
+
+            font-size: 21px;
+
+            font-weight: bold;
+
+            text-align: center;
+
+            margin-bottom: 35px;
+        }
+
+        .sidebar a {
+            display: block;
+
+            color: white;
+
+            text-decoration: none;
+
+            padding: 13px 15px;
+
+            margin-bottom: 8px;
+
+            border-radius: 7px;
+        }
+
+        .sidebar a:hover,
+        .sidebar .active {
+            background: #095d8a;
+        }
+
+        .logout {
+            background: #d9534f;
+        }
+
+        .logout:hover {
+            background: #c9302c !important;
+        }
+
+        /* =========================
+           MAIN
+        ========================= */
+
+        .main {
+            margin-left: 240px;
+
+            padding: 30px;
+        }
+
+        /* =========================
+           TOPBAR
+        ========================= */
+
+        .topbar {
+            background: white;
+
+            padding: 20px 25px;
+
+            border-radius: 12px;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 25px;
+
+            box-shadow:
+                0 3px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .topbar h1 {
+            color: #0b6fa4;
+        }
+
+        .admin-name {
+            color: #666;
+        }
+
+        /* =========================
+           DOCTOR TABLE
+        ========================= */
+
+        .table-container {
+            background: white;
+
+            padding: 25px;
+
+            border-radius: 12px;
+
+            box-shadow:
+                0 3px 12px rgba(0, 0, 0, 0.08);
+
+            overflow-x: auto;
+        }
+
+        .table-header {
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 20px;
+        }
+
+        .table-header h2 {
+            color: #0b6fa4;
+        }
+
+        .count {
+            color: #777;
+        }
+
+        table {
+            width: 100%;
+
+            border-collapse: collapse;
+
+            min-width: 850px;
+        }
+
+        th {
+            background: #0b6fa4;
+
+            color: white;
+
+            padding: 14px;
+
+            text-align: left;
+
+            font-size: 14px;
+        }
+
+        td {
+            padding: 14px;
+
+            border-bottom: 1px solid #eee;
+
+            font-size: 14px;
+        }
+
+        tr:hover {
+            background: #f8fbfd;
+        }
+
+        .doctor-id {
+            color: #0b6fa4;
+
+            font-weight: bold;
+        }
+
+        .specialization {
+            display: inline-block;
+
+            background: #e2f1f8;
+
+            color: #0b6fa4;
+
+            padding: 6px 10px;
+
+            border-radius: 15px;
+
+            font-size: 12px;
+
+            font-weight: bold;
+        }
+
+        .experience {
+            color: #287a35;
+
+            font-weight: bold;
+        }
+
+        /* =========================
+           EMPTY
+        ========================= */
+
+        .empty {
+            text-align: center;
+
+            padding: 50px;
+
+            color: #777;
+        }
+
+        /* =========================
+           BACK
+        ========================= */
+
+        .back {
+            display: inline-block;
+
+            margin-top: 25px;
+
+            color: #0b6fa4;
+
+            text-decoration: none;
+
+            font-weight: bold;
+        }
+
+        .back:hover {
+            text-decoration: underline;
+        }
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width: 800px) {
+
+            .sidebar {
+                position: relative;
+
+                width: 100%;
+
+                height: auto;
+            }
+
+            .main {
+                margin-left: 0;
+            }
+
+            .topbar {
+                flex-direction: column;
+
+                align-items: flex-start;
+
+                gap: 10px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =========================
+         SIDEBAR
+    ========================= -->
+
+    <div class="sidebar">
+
+        <div class="logo">
+            🏥 Hospital Admin
+        </div>
+
+
+        <a href="{{ url_for('admin_dashboard') }}">
+            🏠 Dashboard
+        </a>
+
+
+        <a href="{{ url_for('admin_patients') }}">
+            👥 Patients
+        </a>
+
+
+        <a
+            href="{{ url_for('admin_doctors') }}"
+            class="active"
+        >
+            👨‍⚕️ Doctors
+        </a>
+
+
+        <a href="{{ url_for('my_appointments') }}">
+            📅 Appointments
+        </a>
+
+
+        <a href="{{ url_for('add_prescription') }}">
+            💊 Prescriptions
+        </a>
+
+
+       <a href="{{ url_for('admin_lab_reports') }}">
+            🧪 Lab Reports
+        </a>
+
+
+        <a
+            href="{{ url_for('logout') }}"
+            class="logout"
+        >
+            🚪 Logout
+        </a>
+
+    </div>
+
+
+    <!-- =========================
+         MAIN
+    ========================= -->
+
+    <div class="main">
+
+
+        <!-- TOPBAR -->
+
+        <div class="topbar">
+
+            <h1>
+                👨‍⚕️ Manage Doctors
+            </h1>
+
+            <div class="admin-name">
+
+                Welcome,
+                <strong>
+                    {{ admin_name }}
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================
+             DOCTORS TABLE
+        ========================= -->
+
+        <div class="table-container">
+
+
+            <div class="table-header">
+
+                <h2>
+                    Registered Doctors
+                </h2>
+
+                <div class="count">
+
+                    Total:
+                    <strong>
+                        {{ doctors|length }}
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            {% if doctors %}
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                ID
+                            </th>
+
+                            <th>
+                                Doctor Name
+                            </th>
+
+                            <th>
+                                Specialization
+                            </th>
+
+                            <th>
+                                Experience
+                            </th>
+
+                            <th>
+                                Phone
+                            </th>
+
+                            <th>
+                                Email
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                        {% for doctor in doctors %}
+
+                            <tr>
+
+                                <td class="doctor-id">
+                                    #{{ doctor["id"] }}
+                                </td>
+
+                                <td>
+                                    👨‍⚕️ {{ doctor["name"] }}
+                                </td>
+
+                                <td>
+
+                                    <span class="specialization">
+                                        {{ doctor["specialization"] }}
+                                    </span>
+
+                                </td>
+
+                                <td>
+
+                                    <span class="experience">
+                                        {{ doctor["experience"] }} years
+                                    </span>
+
+                                </td>
+
+                                <td>
+                                    {{ doctor["phone"] or "Not available" }}
+                                </td>
+
+                                <td>
+                                    {{ doctor["email"] or "Not available" }}
+                                </td>
+
+                            </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            {% else %}
+
+                <div class="empty">
+
+                    <h2>
+                        👨‍⚕️ No Doctors
+                    </h2>
+
+                    <p>
+                        No doctors have been added yet.
+                    </p>
+
+                </div>
+
+            {% endif %}
+
+
+        </div>
+
+
+        <!-- BACK -->
+
+        <a
+            href="{{ url_for('admin_dashboard') }}"
+            class="back"
+        >
+            ← Back to Admin Dashboard
+        </a>
+
+
+    </div>
+
+
+</body>
+
+</html>

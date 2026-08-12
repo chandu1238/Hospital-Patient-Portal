@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Add Prescription</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f8fb;
+            padding: 40px;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: auto;
+
+            background: white;
+
+            padding: 30px;
+
+            border-radius: 12px;
+
+            box-shadow:
+                0 3px 15px rgba(0,0,0,0.08);
+        }
+
+        h1 {
+            color: #0b6fa4;
+
+            margin-bottom: 25px;
+        }
+
+        .patient-info {
+            background: #f4f8fb;
+
+            padding: 18px;
+
+            border-radius: 8px;
+
+            margin-bottom: 25px;
+        }
+
+        .patient-info h3 {
+            color: #0b6fa4;
+
+            margin-bottom: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        label {
+            display: block;
+
+            margin-bottom: 7px;
+
+            font-weight: bold;
+
+            color: #555;
+        }
+
+        input,
+        textarea,
+        select {
+            width: 100%;
+
+            padding: 12px;
+
+            border: 1px solid #ccc;
+
+            border-radius: 6px;
+
+            font-size: 14px;
+        }
+
+        textarea {
+            min-height: 100px;
+
+            resize: vertical;
+        }
+
+        button {
+            width: 100%;
+
+            padding: 13px;
+
+            border: none;
+
+            border-radius: 6px;
+
+            background: #0b6fa4;
+
+            color: white;
+
+            font-size: 16px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #095d8a;
+        }
+
+        .back {
+            display: inline-block;
+
+            margin-top: 15px;
+
+            color: #0b6fa4;
+
+            text-decoration: none;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+    <h1>
+        💊 Add Prescription
+    </h1>
+
+
+    <div class="patient-info">
+
+        <h3>
+            👤 Patient Information
+        </h3>
+
+        <p>
+            <strong>Name:</strong>
+            {{ patient["name"] }}
+        </p>
+
+        <p>
+            <strong>Email:</strong>
+            {{ patient["email"] }}
+        </p>
+
+        <p>
+            <strong>Doctor:</strong>
+            {{ doctor["name"] }}
+        </p>
+
+    </div>
+
+
+    <form method="POST">
+
+
+        <div class="form-group">
+
+            <label>
+                Medicine Name
+            </label>
+
+            <input
+                type="text"
+                name="medicine_name"
+                placeholder="Example: Paracetamol"
+                required
+            >
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label>
+                Dosage
+            </label>
+
+            <input
+                type="text"
+                name="dosage"
+                placeholder="Example: 500 mg"
+                required
+            >
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label>
+                Frequency
+            </label>
+
+            <input
+                type="text"
+                name="frequency"
+                placeholder="Example: Twice a day"
+                required
+            >
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label>
+                Duration
+            </label>
+
+            <input
+                type="text"
+                name="duration"
+                placeholder="Example: 5 days"
+                required
+            >
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label>
+                Instructions
+            </label>
+
+            <textarea
+                name="instructions"
+                placeholder="Example: Take after food"
+            ></textarea>
+
+        </div>
+
+
+        <button type="submit">
+            💊 Save Prescription
+        </button>
+
+
+    </form>
+
+
+    <a
+        href="{{ url_for('doctor_dashboard') }}"
+        class="back"
+    >
+        ← Back to Dashboard
+    </a>
+
+
+</div>
+
+
+</body>
+
+</html>

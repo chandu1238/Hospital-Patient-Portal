@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Patient Registration</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f8fb;
+            min-height: 100vh;
+        }
+
+        nav {
+            background: #0b6fa4;
+            padding: 18px 60px;
+        }
+
+        .logo {
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .container {
+            width: 500px;
+            max-width: 90%;
+            margin: 40px auto;
+            background: white;
+            padding: 35px;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #0b6fa4;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 7px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 18px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 15px;
+        }
+
+        input:focus,
+        select:focus {
+            outline: none;
+            border-color: #0b6fa4;
+        }
+
+        .register-btn {
+            width: 100%;
+            padding: 14px;
+            background: #0b6fa4;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 17px;
+            cursor: pointer;
+        }
+
+        .register-btn:hover {
+            background: #095d8a;
+        }
+
+        .login-text {
+            text-align: center;
+            margin-top: 20px;
+            color: #666;
+        }
+
+        .login-text a {
+            color: #0b6fa4;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .login-text a:hover {
+            text-decoration: underline;
+        }
+
+        .back {
+            display: block;
+            text-align: center;
+            margin-top: 15px;
+            color: #0b6fa4;
+            text-decoration: none;
+        }
+
+        .back:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <div class="logo">🏥 Hospital Portal</div>
+    </nav>
+
+    <div class="container">
+
+        <h1>Patient Registration</h1>
+
+        <p class="subtitle">
+            Create your patient account
+        </p>
+
+        <form method="POST">
+
+            <!-- Full Name -->
+            <label>Full Name</label>
+
+            <input
+                type="text"
+                name="name"
+                placeholder="Enter your full name"
+                required
+            >
+
+            <!-- Age -->
+            <label>Age</label>
+
+            <input
+                type="number"
+                name="age"
+                placeholder="Enter your age"
+                min="1"
+                max="120"
+                required
+            >
+
+            <!-- Gender -->
+            <label>Gender</label>
+
+            <select name="gender" required>
+
+                <option value="">Select Gender</option>
+
+                <option value="Male">Male</option>
+
+                <option value="Female">Female</option>
+
+                <option value="Other">Other</option>
+
+            </select>
+
+            <!-- Phone -->
+            <label>Phone Number</label>
+
+            <input
+                type="tel"
+                name="phone"
+                placeholder="Enter phone number"
+                required
+            >
+
+            <!-- Email -->
+            <label>Email</label>
+
+            <input
+                type="email"
+                name="email"
+                placeholder="Enter email address"
+                required
+            >
+
+            <!-- Password -->
+            <label>Password</label>
+
+            <input
+                type="password"
+                name="password"
+                placeholder="Create password"
+                required
+            >
+
+            <!-- Confirm Password -->
+            <label>Confirm Password</label>
+
+            <input
+                type="password"
+                name="confirm_password"
+                placeholder="Confirm password"
+                required
+            >
+
+            <!-- Register Button -->
+            <button type="submit" class="register-btn">
+                Create Account
+            </button>
+
+        </form>
+
+        <!-- LOGIN LINK -->
+        <p class="login-text">
+            Already have an account?
+            <a href="{{ url_for('login') }}">Login</a>
+        </p>
+
+        <!-- BACK TO HOME -->
+        <a href="{{ url_for('home') }}" class="back">
+            ← Back to Home
+        </a>
+
+    </div>
+
+</body>
+</html>

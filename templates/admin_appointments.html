@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Manage Appointments</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f8fb;
+            color: #333;
+        }
+
+        /* =========================
+           SIDEBAR
+        ========================= */
+
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+
+            width: 240px;
+            height: 100vh;
+
+            background: #0b6fa4;
+
+            padding: 25px 15px;
+        }
+
+        .logo {
+            color: white;
+
+            font-size: 21px;
+
+            font-weight: bold;
+
+            text-align: center;
+
+            margin-bottom: 35px;
+        }
+
+        .sidebar a {
+            display: block;
+
+            color: white;
+
+            text-decoration: none;
+
+            padding: 13px 15px;
+
+            margin-bottom: 8px;
+
+            border-radius: 7px;
+        }
+
+        .sidebar a:hover,
+        .sidebar .active {
+            background: #095d8a;
+        }
+
+        .logout {
+            background: #d9534f;
+        }
+
+        .logout:hover {
+            background: #c9302c !important;
+        }
+
+        /* =========================
+           MAIN
+        ========================= */
+
+        .main {
+            margin-left: 240px;
+            padding: 30px;
+        }
+
+        /* =========================
+           TOPBAR
+        ========================= */
+
+        .topbar {
+            background: white;
+
+            padding: 20px 25px;
+
+            border-radius: 12px;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 25px;
+
+            box-shadow:
+                0 3px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .topbar h1 {
+            color: #0b6fa4;
+        }
+
+        .admin-name {
+            color: #666;
+        }
+
+        /* =========================
+           TABLE
+        ========================= */
+
+        .table-container {
+            background: white;
+
+            padding: 25px;
+
+            border-radius: 12px;
+
+            box-shadow:
+                0 3px 12px rgba(0, 0, 0, 0.08);
+
+            overflow-x: auto;
+        }
+
+        .table-header {
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 20px;
+        }
+
+        .table-header h2 {
+            color: #0b6fa4;
+        }
+
+        .count {
+            color: #777;
+        }
+
+        table {
+            width: 100%;
+
+            border-collapse: collapse;
+
+            min-width: 1100px;
+        }
+
+        th {
+            background: #0b6fa4;
+
+            color: white;
+
+            padding: 14px;
+
+            text-align: left;
+
+            font-size: 14px;
+        }
+
+        td {
+            padding: 14px;
+
+            border-bottom: 1px solid #eee;
+
+            font-size: 14px;
+
+            vertical-align: top;
+        }
+
+        tr:hover {
+            background: #f8fbfd;
+        }
+
+        .appointment-id {
+            color: #0b6fa4;
+
+            font-weight: bold;
+        }
+
+        .patient-name {
+            font-weight: bold;
+        }
+
+        .patient-email {
+            color: #777;
+
+            font-size: 12px;
+
+            margin-top: 4px;
+        }
+
+        /* =========================
+           STATUS
+        ========================= */
+
+        .status {
+            display: inline-block;
+
+            padding: 6px 10px;
+
+            border-radius: 15px;
+
+            font-size: 12px;
+
+            font-weight: bold;
+        }
+
+        .status-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-confirmed {
+            background: #dff5e1;
+            color: #287a35;
+        }
+
+        .status-cancelled {
+            background: #f8d7da;
+            color: #842029;
+        }
+
+        .status-completed {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+
+        /* =========================
+           STATUS ACTION BUTTONS
+        ========================= */
+
+        .status-actions {
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 6px;
+
+            margin-top: 10px;
+
+            min-width: 100px;
+        }
+
+        .status-actions form {
+            margin: 0;
+        }
+
+        .status-actions button {
+            width: 100%;
+
+            padding: 7px 10px;
+
+            border: none;
+
+            border-radius: 5px;
+
+            cursor: pointer;
+
+            font-size: 12px;
+
+            font-weight: bold;
+        }
+
+        .confirm-btn {
+            background: #dff5e1;
+            color: #287a35;
+        }
+
+        .confirm-btn:hover {
+            background: #c8eacb;
+        }
+
+        .cancel-btn {
+            background: #f8d7da;
+            color: #842029;
+        }
+
+        .cancel-btn:hover {
+            background: #f1bfc4;
+        }
+
+        .complete-btn {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+
+        .complete-btn:hover {
+            background: #bce3ea;
+        }
+
+        /* =========================
+           REASON
+        ========================= */
+
+        .reason {
+            max-width: 220px;
+
+            line-height: 1.4;
+        }
+
+        /* =========================
+           EMPTY
+        ========================= */
+
+        .empty {
+            text-align: center;
+
+            padding: 50px;
+
+            color: #777;
+        }
+
+        /* =========================
+           BACK
+        ========================= */
+
+        .back {
+            display: inline-block;
+
+            margin-top: 25px;
+
+            color: #0b6fa4;
+
+            text-decoration: none;
+
+            font-weight: bold;
+        }
+
+        .back:hover {
+            text-decoration: underline;
+        }
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width: 800px) {
+
+            .sidebar {
+                position: relative;
+
+                width: 100%;
+
+                height: auto;
+            }
+
+            .main {
+                margin-left: 0;
+            }
+
+            .topbar {
+                flex-direction: column;
+
+                align-items: flex-start;
+
+                gap: 10px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =========================
+         SIDEBAR
+    ========================= -->
+
+    <div class="sidebar">
+
+        <div class="logo">
+            🏥 Hospital Admin
+        </div>
+
+
+        <a href="{{ url_for('admin_dashboard') }}">
+            🏠 Dashboard
+        </a>
+
+
+        <a href="{{ url_for('admin_patients') }}">
+            👥 Patients
+        </a>
+
+
+        <a href="{{ url_for('admin_doctors') }}">
+            👨‍⚕️ Doctors
+        </a>
+
+
+        <a
+            href="{{ url_for('admin_appointments') }}"
+            class="active"
+        >
+            📅 Appointments
+        </a>
+
+
+        <a href="{{ url_for('add_prescription') }}">
+            💊 Prescriptions
+        </a>
+
+
+       <a href="{{ url_for('admin_lab_reports') }}">
+            🧪 Lab Reports
+        </a>
+
+
+        <a
+            href="{{ url_for('logout') }}"
+            class="logout"
+        >
+            🚪 Logout
+        </a>
+
+    </div>
+
+
+    <!-- =========================
+         MAIN
+    ========================= -->
+
+    <div class="main">
+
+
+        <!-- TOPBAR -->
+
+        <div class="topbar">
+
+            <h1>
+                📅 Manage Appointments
+            </h1>
+
+            <div class="admin-name">
+
+                Welcome,
+                <strong>
+                    {{ admin_name }}
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================
+             APPOINTMENTS TABLE
+        ========================= -->
+
+        <div class="table-container">
+
+
+            <div class="table-header">
+
+                <h2>
+                    All Appointments
+                </h2>
+
+                <div class="count">
+
+                    Total:
+                    <strong>
+                        {{ appointments|length }}
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            {% if appointments %}
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                ID
+                            </th>
+
+                            <th>
+                                Patient
+                            </th>
+
+                            <th>
+                                Doctor
+                            </th>
+
+                            <th>
+                                Date
+                            </th>
+
+                            <th>
+                                Time
+                            </th>
+
+                            <th>
+                                Reason
+                            </th>
+
+                            <th>
+                                Status
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                        {% for appointment in appointments %}
+
+                            <tr>
+
+
+                                <!-- ID -->
+
+                                <td class="appointment-id">
+                                    #{{ appointment["id"] }}
+                                </td>
+
+
+                                <!-- PATIENT -->
+
+                                <td>
+
+                                    <div class="patient-name">
+                                        {{ appointment["patient_name"] or "Unknown" }}
+                                    </div>
+
+                                    <div class="patient-email">
+                                        {{ appointment["patient_email"] or "" }}
+                                    </div>
+
+                                </td>
+
+
+                                <!-- DOCTOR -->
+
+                                <td>
+                                    👨‍⚕️ {{ appointment["doctor_name"] }}
+                                </td>
+
+
+                                <!-- DATE -->
+
+                                <td>
+                                    📅 {{ appointment["appointment_date"] }}
+                                </td>
+
+
+                                <!-- TIME -->
+
+                                <td>
+                                    🕐 {{ appointment["appointment_time"] }}
+                                </td>
+
+
+                                <!-- REASON -->
+
+                                <td class="reason">
+                                    {{ appointment["reason"] or "Not specified" }}
+                                </td>
+
+
+                                <!-- STATUS -->
+
+                                <td>
+
+                                    {% set status = appointment["status"] or "Pending" %}
+
+
+                                    <!-- CURRENT STATUS -->
+
+                                    {% if status == "Pending" %}
+
+                                        <span class="status status-pending">
+                                            Pending
+                                        </span>
+
+                                    {% elif status == "Confirmed" %}
+
+                                        <span class="status status-confirmed">
+                                            Confirmed
+                                        </span>
+
+                                    {% elif status == "Cancelled" %}
+
+                                        <span class="status status-cancelled">
+                                            Cancelled
+                                        </span>
+
+                                    {% elif status == "Completed" %}
+
+                                        <span class="status status-completed">
+                                            Completed
+                                        </span>
+
+                                    {% else %}
+
+                                        <span class="status status-pending">
+                                            {{ status }}
+                                        </span>
+
+                                    {% endif %}
+
+
+                                    <!-- ACTION BUTTONS -->
+
+                                    <div class="status-actions">
+
+
+                                        <!-- CONFIRM -->
+
+                                        {% if status != "Confirmed"
+                                              and status != "Cancelled"
+                                              and status != "Completed" %}
+
+                                            <form
+                                                method="POST"
+                                                action="{{ url_for(
+                                                    'admin_update_appointment_status',
+                                                    appointment_id=appointment['id'],
+                                                    status='Confirmed'
+                                                ) }}"
+                                            >
+
+                                                <button
+                                                    type="submit"
+                                                    class="confirm-btn"
+                                                >
+                                                    ✅ Confirm
+                                                </button>
+
+                                            </form>
+
+                                        {% endif %}
+
+
+                                        <!-- CANCEL -->
+
+                                        {% if status != "Cancelled"
+                                              and status != "Completed" %}
+
+                                            <form
+                                                method="POST"
+                                                action="{{ url_for(
+                                                    'admin_update_appointment_status',
+                                                    appointment_id=appointment['id'],
+                                                    status='Cancelled'
+                                                ) }}"
+                                            >
+
+                                                <button
+                                                    type="submit"
+                                                    class="cancel-btn"
+                                                >
+                                                    ❌ Cancel
+                                                </button>
+
+                                            </form>
+
+                                        {% endif %}
+
+
+                                        <!-- COMPLETE -->
+
+                                        {% if status == "Confirmed" %}
+
+                                            <form
+                                                method="POST"
+                                                action="{{ url_for(
+                                                    'admin_update_appointment_status',
+                                                    appointment_id=appointment['id'],
+                                                    status='Completed'
+                                                ) }}"
+                                            >
+
+                                                <button
+                                                    type="submit"
+                                                    class="complete-btn"
+                                                >
+                                                    ✔️ Complete
+                                                </button>
+
+                                            </form>
+
+                                        {% endif %}
+
+
+                                    </div>
+
+                                </td>
+
+
+                            </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+
+            {% else %}
+
+
+                <div class="empty">
+
+                    <h2>
+                        📅 No Appointments
+                    </h2>
+
+                    <p>
+                        No appointments have been booked yet.
+                    </p>
+
+                </div>
+
+
+            {% endif %}
+
+
+        </div>
+
+
+        <!-- BACK -->
+
+        <a
+            href="{{ url_for('admin_dashboard') }}"
+            class="back"
+        >
+            ← Back to Admin Dashboard
+        </a>
+
+
+    </div>
+
+
+</body>
+
+</html>

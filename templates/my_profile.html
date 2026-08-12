@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>My Profile</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f8fb;
+            color: #333;
+            min-height: 100vh;
+        }
+
+        /* =========================
+           NAVBAR
+        ========================= */
+
+        nav {
+            background: #0b6fa4;
+            padding: 18px 60px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .logout {
+            color: white;
+            text-decoration: none;
+            background: #d9534f;
+            padding: 9px 15px;
+            border-radius: 6px;
+        }
+
+        .logout:hover {
+            background: #c9302c;
+        }
+
+        /* =========================
+           MAIN CONTAINER
+        ========================= */
+
+        .container {
+            width: 800px;
+            max-width: 94%;
+            margin: 45px auto;
+        }
+
+        /* =========================
+           PROFILE HEADER
+        ========================= */
+
+        .profile-header {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+
+            box-shadow:
+                0 3px 12px rgba(0, 0, 0, 0.08);
+
+            text-align: center;
+
+            margin-bottom: 25px;
+        }
+
+        .profile-icon {
+            width: 80px;
+            height: 80px;
+
+            margin: 0 auto 15px;
+
+            background: #0b6fa4;
+            color: white;
+
+            border-radius: 50%;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 38px;
+        }
+
+        .profile-header h1 {
+            color: #0b6fa4;
+            margin-bottom: 8px;
+        }
+
+        .profile-header p {
+            color: #777;
+        }
+
+        /* =========================
+           PROFILE DETAILS
+        ========================= */
+
+        .profile-card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+
+            box-shadow:
+                0 3px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .profile-card h2 {
+            color: #0b6fa4;
+            margin-bottom: 25px;
+        }
+
+        .details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .detail {
+            background: #f4f8fb;
+            padding: 18px;
+            border-radius: 8px;
+        }
+
+        .detail strong {
+            display: block;
+            color: #666;
+            font-size: 13px;
+            margin-bottom: 7px;
+        }
+
+        .detail span {
+            font-size: 16px;
+            color: #333;
+            word-break: break-word;
+        }
+
+        /* =========================
+           BUTTONS
+        ========================= */
+
+        .buttons {
+            margin-top: 25px;
+
+            display: flex;
+            gap: 15px;
+
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-block;
+
+            padding: 12px 20px;
+
+            border-radius: 7px;
+
+            text-decoration: none;
+
+            font-weight: bold;
+        }
+
+        .dashboard-btn {
+            background: #0b6fa4;
+            color: white;
+        }
+
+        .dashboard-btn:hover {
+            background: #095d8a;
+        }
+
+        .logout-btn {
+            background: #d9534f;
+            color: white;
+        }
+
+        .logout-btn:hover {
+            background: #c9302c;
+        }
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width: 650px) {
+
+            nav {
+                padding: 15px 20px;
+            }
+
+            .logo {
+                font-size: 19px;
+            }
+
+            .details {
+                grid-template-columns: 1fr;
+            }
+
+            .buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                text-align: center;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =========================
+         NAVBAR
+    ========================= -->
+
+    <nav>
+
+        <div class="logo">
+            🏥 Hospital Portal
+        </div>
+
+        <a
+            href="{{ url_for('logout') }}"
+            class="logout"
+        >
+            🚪 Logout
+        </a>
+
+    </nav>
+
+
+    <!-- =========================
+         MAIN CONTAINER
+    ========================= -->
+
+    <div class="container">
+
+
+        <!-- PROFILE HEADER -->
+
+        <div class="profile-header">
+
+            <div class="profile-icon">
+                👤
+            </div>
+
+            <h1>
+                {{ patient["name"] }}
+            </h1>
+
+            <p>
+                Patient Profile
+            </p>
+
+        </div>
+
+
+        <!-- PROFILE DETAILS -->
+
+        <div class="profile-card">
+
+            <h2>
+                👤 Personal Information
+            </h2>
+
+
+            <div class="details">
+
+
+                <!-- NAME -->
+
+                <div class="detail">
+
+                    <strong>
+                        FULL NAME
+                    </strong>
+
+                    <span>
+                        {{ patient["name"] }}
+                    </span>
+
+                </div>
+
+
+                <!-- AGE -->
+
+                <div class="detail">
+
+                    <strong>
+                        AGE
+                    </strong>
+
+                    <span>
+                        {{ patient["age"] }} years
+                    </span>
+
+                </div>
+
+
+                <!-- GENDER -->
+
+                <div class="detail">
+
+                    <strong>
+                        GENDER
+                    </strong>
+
+                    <span>
+                        {{ patient["gender"] }}
+                    </span>
+
+                </div>
+
+
+                <!-- PHONE -->
+
+                <div class="detail">
+
+                    <strong>
+                        PHONE NUMBER
+                    </strong>
+
+                    <span>
+                        {{ patient["phone"] }}
+                    </span>
+
+                </div>
+
+
+                <!-- EMAIL -->
+
+                <div class="detail">
+
+                    <strong>
+                        EMAIL ADDRESS
+                    </strong>
+
+                    <span>
+                        {{ patient["email"] }}
+                    </span>
+
+                </div>
+
+
+                <!-- PATIENT ID -->
+
+                <div class="detail">
+
+                    <strong>
+                        PATIENT ID
+                    </strong>
+
+                    <span>
+                        #{{ patient["id"] }}
+                    </span>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- BUTTONS -->
+
+            <div class="buttons">
+                <a
+                    href="{{ url_for('edit_profile') }}"
+                    class="btn dashboard-btn"
+                >
+                    ✏️ Edit Profile
+                </a>
+
+                <a
+                    href="{{ url_for('patient_dashboard') }}"
+                    class="btn dashboard-btn"
+                >
+                    ← Back to Dashboard
+                </a>
+
+                <a
+                    href="{{ url_for('logout') }}"
+                    class="btn logout-btn"
+                >
+                    🚪 Logout
+                </a>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+</body>
+
+</html>

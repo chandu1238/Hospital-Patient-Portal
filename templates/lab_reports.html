@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>My Lab Reports</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f8fb;
+            color: #333;
+            min-height: 100vh;
+        }
+
+        /* =========================
+           NAVBAR
+        ========================= */
+
+        nav {
+            background: #0b6fa4;
+            padding: 18px 60px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .logout {
+            color: white;
+            text-decoration: none;
+
+            background: #d9534f;
+
+            padding: 9px 15px;
+
+            border-radius: 6px;
+        }
+
+        .logout:hover {
+            background: #c9302c;
+        }
+
+        /* =========================
+           MAIN CONTAINER
+        ========================= */
+
+        .container {
+            width: 1000px;
+            max-width: 94%;
+
+            margin: 40px auto;
+        }
+
+        /* =========================
+           HEADER
+        ========================= */
+
+        .header {
+            background: white;
+
+            padding: 25px;
+
+            border-radius: 12px;
+
+            margin-bottom: 25px;
+
+            box-shadow:
+                0 3px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .header h1 {
+            color: #0b6fa4;
+
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            color: #777;
+        }
+
+        /* =========================
+           REPORT CARD
+        ========================= */
+
+        .report-card {
+            background: white;
+
+            padding: 25px;
+
+            border-radius: 12px;
+
+            margin-bottom: 20px;
+
+            box-shadow:
+                0 3px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .report-top {
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 20px;
+        }
+
+        .test-name {
+            color: #0b6fa4;
+
+            font-size: 21px;
+
+            font-weight: bold;
+        }
+
+        .status {
+            background: #dff5e1;
+
+            color: #287a35;
+
+            padding: 7px 14px;
+
+            border-radius: 20px;
+
+            font-size: 13px;
+
+            font-weight: bold;
+        }
+
+        /* =========================
+           DETAILS
+        ========================= */
+
+        .details {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 15px;
+        }
+
+        .detail {
+            background: #f4f8fb;
+
+            padding: 15px;
+
+            border-radius: 8px;
+        }
+
+        .detail strong {
+            display: block;
+
+            color: #666;
+
+            font-size: 12px;
+
+            margin-bottom: 7px;
+        }
+
+        .detail span {
+            font-size: 15px;
+
+            color: #333;
+        }
+
+        /* =========================
+           RESULT
+        ========================= */
+
+        .result {
+            margin-top: 15px;
+
+            background: #f4f8fb;
+
+            padding: 18px;
+
+            border-radius: 8px;
+        }
+
+        .result strong {
+            color: #0b6fa4;
+
+            display: block;
+
+            margin-bottom: 7px;
+        }
+
+        /* =========================
+           NOTES
+        ========================= */
+
+        .notes {
+            margin-top: 15px;
+
+            background: #fff8e1;
+
+            padding: 15px;
+
+            border-radius: 8px;
+        }
+
+        .notes strong {
+            color: #856404;
+
+            display: block;
+
+            margin-bottom: 6px;
+        }
+
+        /* =========================
+           EMPTY
+        ========================= */
+
+        .empty {
+            background: white;
+
+            padding: 50px;
+
+            text-align: center;
+
+            border-radius: 12px;
+
+            box-shadow:
+                0 3px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .empty-icon {
+            font-size: 50px;
+
+            margin-bottom: 15px;
+        }
+
+        .empty h2 {
+            color: #0b6fa4;
+
+            margin-bottom: 10px;
+        }
+
+        .empty p {
+            color: #777;
+        }
+
+        /* =========================
+           BACK BUTTON
+        ========================= */
+
+        .back {
+            display: inline-block;
+
+            margin-top: 25px;
+
+            color: #0b6fa4;
+
+            text-decoration: none;
+
+            font-weight: bold;
+        }
+
+        .back:hover {
+            text-decoration: underline;
+        }
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width: 700px) {
+
+            nav {
+                padding: 15px 20px;
+            }
+
+            .logo {
+                font-size: 19px;
+            }
+
+            .details {
+                grid-template-columns: 1fr;
+            }
+
+            .report-top {
+                flex-direction: column;
+
+                align-items: flex-start;
+
+                gap: 10px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =========================
+         NAVBAR
+    ========================= -->
+
+    <nav>
+
+        <div class="logo">
+            🏥 Hospital Portal
+        </div>
+
+        <a
+            href="{{ url_for('logout') }}"
+            class="logout"
+        >
+            🚪 Logout
+        </a>
+
+    </nav>
+
+
+    <!-- =========================
+         MAIN
+    ========================= -->
+
+    <div class="container">
+
+
+        <!-- HEADER -->
+
+        <div class="header">
+
+            <h1>
+                🧪 My Lab Reports
+            </h1>
+
+            <p>
+                Welcome, {{ patient_name }}.
+                View your laboratory test reports here.
+            </p>
+
+        </div>
+
+
+        <!-- =========================
+             REPORTS
+        ========================= -->
+
+        {% if reports %}
+
+            {% for report in reports %}
+
+                <div class="report-card">
+
+
+                    <!-- TOP -->
+
+                    <div class="report-top">
+
+                        <div class="test-name">
+                            🧪 {{ report["test_name"] }}
+                        </div>
+
+                        <div class="status">
+                            {{ report["status"] }}
+                        </div>
+
+                    </div>
+
+
+                    <!-- DETAILS -->
+
+                    <div class="details">
+
+
+                        <!-- DATE -->
+
+                        <div class="detail">
+
+                            <strong>
+                                📅 TEST DATE
+                            </strong>
+
+                            <span>
+                                {{ report["test_date"] }}
+                            </span>
+
+                        </div>
+
+
+                        <!-- DOCTOR -->
+
+                        <div class="detail">
+
+                            <strong>
+                                👨‍⚕️ DOCTOR
+                            </strong>
+
+                            <span>
+                                {{ report["doctor_name"] or "Not specified" }}
+                            </span>
+
+                        </div>
+
+
+                        <!-- REPORT ID -->
+
+                        <div class="detail">
+
+                            <strong>
+                                🔢 REPORT ID
+                            </strong>
+
+                            <span>
+                                #{{ report["id"] }}
+                            </span>
+
+                        </div>
+
+
+                    </div>
+
+
+                    <!-- RESULT -->
+
+                    <div class="result">
+
+                        <strong>
+                            📊 RESULT
+                        </strong>
+
+                        <span>
+                            {{ report["result"] or "Result not available yet." }}
+                        </span>
+
+                    </div>
+
+
+                    <!-- NOTES -->
+
+                    {% if report["notes"] %}
+
+                        <div class="notes">
+
+                            <strong>
+                                📝 NOTES
+                            </strong>
+
+                            <span>
+                                {{ report["notes"] }}
+                            </span>
+
+                        </div>
+
+                    {% endif %}
+
+
+                </div>
+
+            {% endfor %}
+
+
+        {% else %}
+
+
+            <!-- EMPTY STATE -->
+
+            <div class="empty">
+
+                <div class="empty-icon">
+                    🧪
+                </div>
+
+                <h2>
+                    No Lab Reports
+                </h2>
+
+                <p>
+                    You don't have any lab reports yet.
+                </p>
+
+            </div>
+
+
+        {% endif %}
+
+
+        <!-- BACK -->
+
+        <a
+            href="{{ url_for('patient_dashboard') }}"
+            class="back"
+        >
+            ← Back to Dashboard
+        </a>
+
+
+    </div>
+
+
+</body>
+
+</html>

@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Book Appointment</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f8fb;
+            min-height: 100vh;
+        }
+
+        /* =========================
+           NAVBAR
+        ========================= */
+
+        nav {
+            background: #0b6fa4;
+            padding: 18px 60px;
+        }
+
+        .logo {
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        /* =========================
+           CONTAINER
+        ========================= */
+
+        .container {
+            width: 600px;
+            max-width: 92%;
+            margin: 50px auto;
+            background: white;
+            padding: 35px;
+            border-radius: 12px;
+
+            box-shadow:
+                0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #0b6fa4;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        /* =========================
+           FORM
+        ========================= */
+
+        label {
+            display: block;
+            margin-bottom: 7px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        input,
+        select,
+        textarea {
+
+            width: 100%;
+
+            padding: 12px;
+
+            margin-bottom: 20px;
+
+            border: 1px solid #ccc;
+
+            border-radius: 6px;
+
+            font-size: 15px;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+
+            outline: none;
+
+            border-color: #0b6fa4;
+        }
+
+        textarea {
+
+            height: 100px;
+
+            resize: vertical;
+        }
+
+        /* =========================
+           BUTTON
+        ========================= */
+
+        .book-btn {
+
+            width: 100%;
+
+            padding: 14px;
+
+            background: #0b6fa4;
+
+            color: white;
+
+            border: none;
+
+            border-radius: 6px;
+
+            font-size: 17px;
+
+            cursor: pointer;
+        }
+
+        .book-btn:hover {
+
+            background: #095d8a;
+        }
+
+        /* =========================
+           BACK BUTTON
+        ========================= */
+
+        .back {
+
+            display: block;
+
+            text-align: center;
+
+            margin-top: 20px;
+
+            color: #0b6fa4;
+
+            text-decoration: none;
+
+            font-weight: bold;
+        }
+
+        .back:hover {
+
+            text-decoration: underline;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =========================
+         NAVBAR
+    ========================= -->
+
+    <nav>
+
+        <div class="logo">
+            🏥 Hospital Portal
+        </div>
+
+    </nav>
+
+
+    <!-- =========================
+         FORM CONTAINER
+    ========================= -->
+
+    <div class="container">
+
+        <h1>
+            📅 Book Appointment
+        </h1>
+
+        <p class="subtitle">
+            Schedule an appointment with your doctor
+        </p>
+
+
+        <!-- =========================
+             APPOINTMENT FORM
+        ========================= -->
+
+        <form method="POST">
+
+
+            <!-- DOCTOR -->
+
+            <label>
+                Select Doctor
+            </label>
+
+            <select
+                name="doctor_name"
+                required
+            >
+
+                <option value="">
+                    Select Doctor
+                </option>
+
+                <option value="Dr. Rajesh Kumar - General Physician">
+                    Dr. Rajesh Kumar - General Physician
+                </option>
+
+                <option value="Dr. Priya Sharma - Cardiologist">
+                    Dr. Priya Sharma - Cardiologist
+                </option>
+
+                <option value="Dr. Anil Reddy - Orthopedic">
+                    Dr. Anil Reddy - Orthopedic
+                </option>
+
+                <option value="Dr. Sneha Rao - Dermatologist">
+                    Dr. Sneha Rao - Dermatologist
+                </option>
+
+                <option value="Dr. Kiran Kumar - Neurologist">
+                    Dr. Kiran Kumar - Neurologist
+                </option>
+
+            </select>
+
+
+            <!-- DATE -->
+
+            <label>
+                Appointment Date
+            </label>
+
+            <input
+                type="date"
+                name="appointment_date"
+                required
+            >
+
+
+            <!-- TIME -->
+
+            <label>
+                Appointment Time
+            </label>
+
+            <input
+                type="time"
+                name="appointment_time"
+                required
+            >
+
+
+            <!-- REASON -->
+
+            <label>
+                Reason for Visit
+            </label>
+
+            <textarea
+                name="reason"
+                placeholder="Describe your reason for visiting..."
+            ></textarea>
+
+
+            <!-- SUBMIT -->
+
+            <button
+                type="submit"
+                class="book-btn"
+            >
+                ✅ Book Appointment
+            </button>
+
+        </form>
+
+
+        <!-- BACK -->
+
+        <a
+            href="{{ url_for('patient_dashboard') }}"
+            class="back"
+        >
+            ← Back to Dashboard
+        </a>
+
+    </div>
+
+
+</body>
+
+</html>
