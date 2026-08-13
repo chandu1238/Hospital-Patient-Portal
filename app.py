@@ -1,10 +1,12 @@
 from flask import Flask, render_template, request, session, redirect, url_for
 import sqlite3
+from database import create_database
 
 app = Flask(__name__)
 
-# Session secret key
 app.secret_key = "hospital-secret-key"
+
+create_database()
 
 
 # ==================================================
