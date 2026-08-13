@@ -23,6 +23,28 @@ def create_database():
     """)
 
     # ==================================================
+    # DEFAULT PATIENT
+    # ==================================================
+
+    cursor.execute("SELECT COUNT(*) FROM patients")
+    patient_count = cursor.fetchone()[0]
+
+    if patient_count == 0:
+
+        cursor.execute("""
+            INSERT INTO patients
+            (name, age, gender, phone, email, password)
+            VALUES (?, ?, ?, ?, ?, ?)
+        """, (
+            "Test Patient",
+            22,
+            "Male",
+            "9876543210",
+            "patient@hospital.com",
+            "patient123"
+        ))
+
+    # ==================================================
     # ADMINS TABLE
     # ==================================================
 
